@@ -1,0 +1,5 @@
+examples/terraform.tfstate.backup
+examples/.terraform/
+examples/terraform.tfstate.backup
+examples/.terraform.lock.hcl
+
