@@ -1,19 +1,17 @@
-###################################################################### 
-# Outputs for the LTS keys created in the module
-###################################################################### 
-
-output "log_group_ids" {
-  description = "Map of log group names to their IDs."
+# Map of group names to their IDs
+output "group_ids_by_name" {
+  description = "Map of group names to their IDs"
   value = {
-    for group in huaweicloud_lts_group.this :
-    group.group_name => group.id  # Map the log group name to its ID.
+    for group_name, group in huaweicloud_lts_group.log_groups :
+    group_name => group.id
   }
 }
 
-output "log_stream_ids" {
-  description = "Map of log stream names to their IDs."
+# Map of stream keys (group_name.stream_name) to their IDs
+output "stream_ids_by_name" {
+  description = "Map of stream names to their IDs, keyed by group_name.stream_name"
   value = {
-    for stream in huaweicloud_lts_stream.this :
-    stream.stream_name => stream.id  # Map the stream name to its ID.
+    for stream_key, stream in huaweicloud_lts_stream.log_streams :
+    stream_key => stream.id
   }
 }

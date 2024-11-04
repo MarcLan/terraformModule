@@ -1,40 +1,40 @@
-######################################################################
-# An example of creating LTS
-######################################################################
 module "lts" {
-  source = "../01-lts" # Path to the LTS module
-  log_groups = [
+  source = "../01-lts"  # Update the path accordingly
+
+  lts_configurations = [
     {
-      group_name  = "group-1"
-      ttl_in_days = "30"
+      group_name  = "example-log-group-1"
+      ttl_in_days = 7
+      tags        = { environment = "production", department = "IT" }
+      region      = "ap-southeast-2"
+
+      streams = [
+        {
+          stream_name           = "example-log-stream-1a"
+          ttl_in_days           = 7
+          enterprise_project_id = "enterprise-project-id-1"
+          tags                  = { application = "app1" }
+          region                = "ap-southeast-2"
+        },
+        {
+          stream_name = "example-log-stream-1b"
+          # Optional attributes can be omitted
+        }
+      ]
     },
     {
-      group_name  = "group-2"
-      ttl_in_days = "30"
+      group_name  = "example-log-group-2"
+      ttl_in_days = 14
+
+      streams = [
+        {
+          stream_name = "example-log-stream-2a"
+          ttl_in_days = 14
+        },
+        {
+          stream_name = "example-log-stream-2b"
+        }
+      ]
     }
   ]
-
-  log_streams = [
-    {
-      group_name  = "group-1"
-      stream_name = "stream-1-1"
-      ttl_in_days = "30"
-    },
-    {
-      group_name  = "group-1"
-      stream_name = "stream-1-2"
-      ttl_in_days = "30"
-    },
-    {
-      group_name  = "group-2"
-      stream_name = "stream-2-1"
-      ttl_in_days = "30"
-    },
-    {
-      group_name  = "group-2"
-      stream_name = "stream-2-2"
-      ttl_in_days = "30"
-    },
-  ]
-
 }
